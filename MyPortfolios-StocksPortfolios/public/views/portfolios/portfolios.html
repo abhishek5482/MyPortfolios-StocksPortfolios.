@@ -1,0 +1,38 @@
+<div class="container" ng-init="getAllPortfolios()">
+    
+    <section class="jumbotron text-center">
+      <div class="container">
+        <h1 class="jumbotron-heading">My Portfolios</h1>
+        <p class="lead text-muted">Welcome to My Portfolios site! </p>
+        <p>
+          With My Portfolios you can track and monitor multiple stock portfolios in real-time.<br>
+          Simply add the stocks that you want to monitor and you will get updated statistics about your portfolio performance (gains, market values, dividends and more!).
+        </p>
+        <p>
+          <button type="button" class="btn btn-primary" ng-click="openModal()">Add New Portfolio</button>
+        </p>
+      </div>
+    </section>
+    <hr>
+    <div class="row text-center">
+        <div ng-repeat="port in portfolios" class="col-md-4 col-sm-6">
+          <h3>{{port.name}} <small> {{ port.owner }} </small> </h3>
+          <p>Total Value : {{port.totalValue | currency}}</p>
+          <p ng-class="{'color-red': port.totalGainLoss < 0 , 'color-green': port.totalGainLoss > 0}">
+              Gain/Loss : <span ng-show="port.totalGainLoss > 0">+</span>{{port.totalGainLoss | currency}} (<span ng-show="port.totalGainLoss > 0">+</span>{{port.totalGainLossPercent | number:2}}%)
+          </p>
+          <p>
+              <a href="/#/portfolios/{{port._id}}" class="btn btn-primary">Show Portfolio</a>
+              <button class="btn btn-danger" ng-click="removePortfolio(port._id)">Remove</button>
+          </p>
+          <hr id="portfolios-view">
+        </div>
+    </div>
+    
+    <div class="text-center" id="emptyportfolio" ng-show="noPortfolios == true">
+      
+      <h3 class="text-muted align-middle">No Portfolios to show.</h3>
+      
+    </div>
+    
+</div>
